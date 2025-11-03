@@ -5,44 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Page Facebook</title>
   <style>
-    :root { --bg:#ffffff; --fg:#111111; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#111111; --fg:#eeeeee; }
-  }
-  /* Overrides explicites poussés par l'app */
-  :root[data-theme="light"] { --bg:#ffffff; --fg:#111111; }
-  :root[data-theme="dark"]  { --bg:#111111; --fg:#eeeeee; }
+    /* 🎨 Thème par défaut */
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+    }
 
+    /* 🌙 Thème sombre automatique */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111111;
+        --fg: #eeeeee;
+      }
+    }
+
+    /* 🌗 Thème forcé par l’app MAUI */
+    :root[data-theme="light"] {
+      --bg: #ffffff;
+      --fg: #111111;
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #111111;
+      --fg: #eeeeee;
+    }
+
+    /* 🧱 Mise en page */
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden;
+      background: var(--bg);
+      color: var(--fg);
       display: flex;
       justify-content: center;
       align-items: center;
-      :root { --bg:#ffffff; --fg:#111111; };
-      background:var(--bg); color:var(--fg);
- 
+      overflow: hidden;
+      font-family: Arial, sans-serif;
     }
-    /* conteneur qui prend toute la hauteur de l'écran */
+
+    /* Conteneur qui prend toute la hauteur de l'écran */
     .wrap {
       width: 100%;
-      min-height: 100vh;        /* pleine hauteur d’écran */
+      min-height: 100vh;
       box-sizing: border-box;
       display: block;
+      background: var(--bg);
+      color: var(--fg);
     }
+
     .fb-page {
       width: 100% !important;
-      max-width: 600px; /* limite la largeur sur grands écrans */
+      max-width: 600px;
+    }
+
+    /* Texte de secours (au cas où le plugin ne charge pas) */
+    a {
+      color: var(--fg);
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
   <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" 
-    src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0"></script>
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0">
+  </script>
 
   <div class="wrap">
     <div class="fb-page"
@@ -60,32 +89,30 @@
     </div>
   </div>
 
-  <!-- Ajuste la largeur/hauteur au resize/orientation et reparse -->
   <script>
+    // 🔄 Adapter la taille du widget selon la taille d’écran
     function resizeFb() {
       var el = document.querySelector('.fb-page');
       if (!el) return;
       el.setAttribute('data-width', Math.floor(document.documentElement.clientWidth));
-      el.setAttribute('data-height', Math.floor(window.innerHeight)); // valeur px exigée
+      el.setAttribute('data-height', Math.floor(window.innerHeight));
       if (window.FB && FB.XFBML && FB.XFBML.parse) {
         FB.XFBML.parse();
       }
     }
+
     window.addEventListener('load', resizeFb);
     window.addEventListener('orientationchange', resizeFb);
     window.addEventListener('resize', resizeFb);
 
-    // Appelée depuis MAUI pour changer le thème
-  window.setTheme = function(theme) {
-    if (theme === 'light' || theme === 'dark') {
-      document.documentElement.setAttribute('data-theme', theme);
-    } else {
-      document.documentElement.removeAttribute('data-theme'); // redevient media query
-    }
-  };
+    // 🌗 Fonction appelée depuis .NET MAUI pour forcer le thème
+    window.setTheme = function(theme) {
+      if (theme === 'light' || theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', theme);
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+    };
   </script>
-
-</style>
-
 </body>
 </html>
