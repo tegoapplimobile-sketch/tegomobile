@@ -22,16 +22,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      :root { --bg:#ffffff; --fg:#111111; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#111111; --fg:#eeeeee; }
-  }
-  /* Overrides explicites poussés par l'app */
-  :root[data-theme="light"] { --bg:#ffffff; --fg:#111111; }
-  :root[data-theme="dark"]  { --bg:#111111; --fg:#eeeeee; }
-
-  html, body { height:100%; margin:0; background:var(--bg); color:var(--fg); }
-  /* mets tes autres styles avec var(--bg)/var(--fg) */
+      :root { --bg:#ffffff; --fg:#111111; };
+      background:var(--bg); color:var(--fg);
+ 
     }
     /* conteneur qui prend toute la hauteur de l'écran */
     .wrap {
