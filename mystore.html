@@ -5,26 +5,86 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Livres à acheter</title>
   <style>
-     :root { --bg:#ffffff; --fg:#111111; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#111111; --fg:#eeeeee; }
-  }
-  /* Overrides explicites poussés par l'app */
-  :root[data-theme="light"] { --bg:#ffffff; --fg:#111111; }
-  :root[data-theme="dark"]  { --bg:#111111; --fg:#eeeeee; }
-    
-    body, html { font-family: Arial, sans-serif; margin: 16px; :root { --bg:#ffffff; --fg:#111111; };
-      background:var(--bg); color:var(--fg);}
-    h1 { color: black; }
-    li { padding: 10px; border-radius: 8px; margin: 4px 0; }
-    a { text-decoration: none; color: black; font-weight: 500; }
+     :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --li-bg: #f3f3f3;
+      --li-fg: #111111;
+      --a-fg: #111111;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111111;
+        --fg: #eeeeee;
+        --li-bg: #222222;
+        --li-fg: #ffffff;
+        --a-fg: #ffffff;
+      }
+    }
+
+    /* Overrides explicites poussés par MAUI */
+    :root[data-theme="light"] {
+      --bg: #ffffff;
+      --fg: #111111;
+      --li-bg: #f3f3f3;
+      --li-fg: #111111;
+      --a-fg: #111111;
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #111111;
+      --fg: #eeeeee;
+      --li-bg: #222222;
+      --li-fg: #ffffff;
+      --a-fg: #ffffff;
+    }
+
+    /* 🌈 Styles */
+    html, body {
+      font-family: Arial, sans-serif;
+      margin: 16px;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    h2 {
+      color: var(--fg);
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 10px;
+      margin: 0;
+    }
+
+    li {
+      padding: 10px;
+      border-radius: 8px;
+      margin: 4px 0;
+      background: var(--li-bg);
+      color: var(--li-fg);
+      display: flex;
+      align-items: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--a-fg);
+      font-weight: 500;
+    }
+
     img {
-      width: 50px; /* taille réduite */
-      height: auto; /* garde les proportions */
+      width: 50px;
+      height: auto;
       margin-right: 12px;
       border-radius: 8px;
     }
-    ul { list-style-type: none; padding-left: 10px; }
+
+    p {
+      font-size: 0.8rem;
+      color: #666;
+    }
   </style>
 </head>
 <body>
