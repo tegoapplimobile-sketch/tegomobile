@@ -101,6 +101,17 @@
       }
     }
 
+    // Appelé PAR Facebook quand le SDK est prêt
+  window.fbAsyncInit = function () {
+    FB.init({ xfbml: true, version: 'v19.0' });
+    renderFb();
+  };
+
+  // Sécurité : si le SDK met du temps, on tente quand même après le load
+  window.addEventListener('load', renderFb);
+  window.addEventListener('resize', renderFb);
+  window.addEventListener('orientationchange', renderFb);
+
     window.addEventListener('load', resizeFb);
     window.addEventListener('orientationchange', resizeFb);
     window.addEventListener('resize', resizeFb);
