@@ -35,4 +35,15 @@
   </ul>
   <p style="font-size:0.8rem;color:#666">Dernière mise à jour : novembre 2025</p>
 </body>
+
+  <script>
+    // Appelée depuis MAUI pour changer le thème
+  window.setTheme = function(theme) {
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', theme);
+    } else {
+      document.documentElement.removeAttribute('data-theme'); // redevient media query
+    }
+  };
+  </script>
 </html>
