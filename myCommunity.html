@@ -6,72 +6,31 @@
   <title>Ma communauté</title>
 
   <style>
-    /* 🌗 Thèmes dynamiques */
-    :root {
-      --bg: #ffffff;
-      --fg: #111111;
-    }
+    :root { --bg:#ffffff; --fg:#111111; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#111111; --fg:#eeeeee; } }
+    :root[data-theme="light"] { --bg:#ffffff; --fg:#111111; }
+    :root[data-theme="dark"]  { --bg:#111111; --fg:#eeeeee; }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #111111;
-        --fg: #eeeeee;
-      }
-    }
-
-    :root[data-theme="light"] {
-      --bg: #ffffff;
-      --fg: #111111;
-    }
-
-    :root[data-theme="dark"] {
-      --bg: #111111;
-      --fg: #eeeeee;
-    }
-
-    /* 🧱 Mise en page */
     html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
+      margin:0; padding:0; width:100%; height:100%;
+      background:var(--bg); color:var(--fg);
+      font-family:Arial, sans-serif;
+      display:flex; justify-content:center; align-items:center;
+      /* ⚠️ ne pas bloquer le scroll tant que ça ne marche pas */
+      overflow:auto;
     }
-
-    .wrap {
-      width: 100%;
-      min-height: 100vh;
-      box-sizing: border-box;
-      background: var(--bg);
-      color: var(--fg);
-    }
-
+    .wrap { width:100%; min-height:100vh; box-sizing:border-box; background:var(--bg); color:var(--fg); }
     .fb-page {
-      width: 100% !important;
-      max-width: 600px; /* limite sur grands écrans */
-      margin: 0 auto;
+      width:100% !important;
+      max-width:600px;
+      /* 🛟 hauteur de secours pour éviter “page vide” avant le parse */
+      min-height:600px;
+      margin:0 auto;
     }
-
-    /* Lien visible si le plugin ne charge pas */
-    .fallback a {
-      color: var(--fg);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    /* Transition douce lors du changement de thème */
-    body, .wrap {
-      transition: background 0.3s ease, color 0.3s ease;
-    }
+    .fallback a { color:var(--fg); text-decoration:none; font-weight:500; }
+    body, .wrap { transition: background .3s ease, color .3s ease; }
   </style>
 </head>
-
 <body>
   <div id="fb-root"></div>
 
@@ -80,7 +39,7 @@
          data-href="https://www.facebook.com/OpenAI"
          data-tabs="timeline"
          data-width="100%"
-         data-height=""
+         data-height="600"                <!-- hauteur par défaut -->
          data-adapt-container-width="true"
          data-small-header="false"
          data-hide-cover="true"
@@ -92,41 +51,41 @@
   </div>
 
   <script>
-    // 🌗 Fonction appelée depuis .NET MAUI pour forcer le thème
+    // Thème poussé depuis MAUI
     window.setTheme = function (theme) {
-      if (theme === 'light' || theme === 'dark') {
+      if (theme === 'light' || theme === 'dark')
         document.documentElement.setAttribute('data-theme', theme);
-      } else {
+      else
         document.documentElement.removeAttribute('data-theme');
-      }
     };
 
-    // 🔄 Adapter la taille du widget
-    function renderFb() {
+    function setSizeAttrs() {
       const el = document.querySelector('.fb-page');
       if (!el) return;
       el.setAttribute('data-width', Math.floor(document.documentElement.clientWidth));
-      el.setAttribute('data-height', Math.floor(window.innerHeight));
-      if (window.FB && FB.XFBML && FB.XFBML.parse) {
-        FB.XFBML.parse();
-      }
+      el.setAttribute('data-height', Math.floor(window.innerHeight)); // px requis
     }
 
-    // 📦 Appelée quand le SDK Facebook est prêt
+    function renderFb() {
+      setSizeAttrs();
+      if (window.FB && FB.XFBML && FB.XFBML.parse) FB.XFBML.parse();
+    }
+
+    // Appelé quand le SDK est prêt
     window.fbAsyncInit = function () {
       FB.init({ xfbml: true, version: 'v19.0' });
       renderFb();
     };
 
-    // ⚙️ Ajustements sur évènements
+    // Sécurité : on calibre la taille tôt, avant même le SDK
+    document.addEventListener('DOMContentLoaded', setSizeAttrs);
     window.addEventListener('load', renderFb);
     window.addEventListener('resize', renderFb);
     window.addEventListener('orientationchange', renderFb);
   </script>
 
-  <!-- SDK Facebook -->
+  <!-- SDK Facebook (⚠️ sans xfbml=1 pour éviter auto-parse avant setSizeAttrs) -->
   <script async defer crossorigin="anonymous"
-          src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0">
-  </script>
+          src="https://connect.facebook.net/fr_FR/sdk.js#version=v19.0"></script>
 </body>
 </html>
