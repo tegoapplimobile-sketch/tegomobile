@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Livres à acheter</title>
   <style>
+     :root { --bg:#ffffff; --fg:#111111; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#111111; --fg:#eeeeee; }
+  }
+  /* Overrides explicites poussés par l'app */
+  :root[data-theme="light"] { --bg:#ffffff; --fg:#111111; }
+  :root[data-theme="dark"]  { --bg:#111111; --fg:#eeeeee; }
+    
     body { font-family: Arial, sans-serif; margin: 16px; }
     h1 { color: black; }
     li { background: white; padding: 10px; border-radius: 8px; margin: 4px 0; }
