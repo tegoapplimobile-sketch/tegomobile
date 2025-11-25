@@ -6,39 +6,38 @@
   <title>Livres à acheter</title>
   <style>
      :root {
-      --bg: #ffffff;
-      --fg: #0a0f13;
-      --li-bg: #ffffff;
-      --li-fg: #0a0f13;
-      --a-fg: #0a0f13;
-    }
+  --bg: transparent;
+  --fg: #0a0f13;
+  --li-bg: transparent; /* <--- important */
+  --li-fg: #0a0f13;
+  --a-fg: #0a0f13;
+}
 
     @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0a0f13;
-        --fg: #0a0f13;
-        --li-bg: #0a0f13;
-        --li-fg: #0a0f13;
-        --a-fg: #0a0f13;
-      }
-    }
+  :root {
+    --bg: transparent;
+    --fg: #ffffff;
+    --li-bg: transparent;
+    --li-fg: #ffffff;
+    --a-fg: #ffffff;
+  }
+}
 
-    /* Overrides explicites poussés par MAUI */
-    :root[data-theme="light"] {
-      --bg: #ffffff;
-      --fg: #0a0f13;
-      --li-bg: #ffffff;
-      --li-fg: #0a0f13;
-      --a-fg: #0a0f13;
-    }
+:root[data-theme="light"] {
+  --bg: transparent;
+  --fg: #0a0f13;
+  --li-bg: transparent;
+  --li-fg: #0a0f13;
+  --a-fg: #0a0f13;
+}
 
-    :root[data-theme="dark"] {
-      --bg: #0a0f13;
-      --fg: #0a0f13;
-      --li-bg: #0a0f13;
-      --li-fg: #0a0f13;
-      --a-fg: #ffffff;
-    }
+:root[data-theme="dark"] {
+  --bg: transparent;
+  --fg: #ffffff;
+  --li-bg: transparent;
+  --li-fg: #ffffff;
+  --a-fg: #ffffff;
+}
 
     /* 🌈 Styles */
     html, body {
