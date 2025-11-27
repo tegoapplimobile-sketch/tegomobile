@@ -19,6 +19,9 @@
       background:transparent !important;
       color:var(--fg);
       font-family:Arial, sans-serif;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
     }
 
     .wrap {
@@ -33,65 +36,43 @@
       padding:16px;
     }
 
-    .fb-page {
-      width:100% !important;
+    iframe {
       max-width:600px;
-      min-height:600px;
-      margin:0 auto;
-    }
-
-    .fallback a {
-      color:var(--fg);
-      text-decoration:none;
-      font-weight:500;
+      width:100%;
+      border:none;
+      overflow:hidden;
     }
   </style>
 </head>
 <body>
-  <div id="fb-root"></div>
-
   <div class="wrap">
-    <div class="fb-page"
-         data-href="https://www.facebook.com/TegoAppliMobile"
-         data-tabs="timeline"
-         data-width="600"
-         data-height="600"
-         data-adapt-container-width="true"
-         data-small-header="false"
-         data-hide-cover="false"
-         data-show-facepile="true">
-      <blockquote cite="https://www.facebook.com/TegoAppliMobile"
-                  class="fb-xfbml-parse-ignore">
-        <p class="fallback">
-          <a href="https://www.facebook.com/TegoAppliMobile" target="_blank" rel="noopener">
-            Voir la page Facebook
-          </a>
-        </p>
-      </blockquote>
-    </div>
+    <iframe
+      src="https://www.facebook.com/plugins/page.php
+?href=https%3A%2F%2Fwww.facebook.com%2FTegoAppliMobile
+&tabs=timeline
+&width=600
+&height=600
+&small_header=false
+&adapt_container_width=true
+&hide_cover=false
+&show_facepile=true"
+      width="600"
+      height="600"
+      scrolling="no"
+      frameborder="0"
+      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+      allowfullscreen="true">
+    </iframe>
   </div>
 
   <script>
-    // Fonction thème pour MAUI (on la garde)
+    // Pour que MAUI puisse pousser le thème si tu veux garder ça
     window.setTheme = function (theme) {
       if (theme === 'light' || theme === 'dark')
         document.documentElement.setAttribute('data-theme', theme);
       else
         document.documentElement.removeAttribute('data-theme');
     };
-
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: 'TON_APP_ID_FACEBOOK', // optionnel mais mieux si tu as déjà une app Facebook
-        xfbml: true,
-        version: 'v19.0'
-      });
-    };
-  </script>
-
-  <!-- SDK Facebook officiel -->
-  <script async defer crossorigin="anonymous"
-          src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0">
   </script>
 </body>
 </html>
