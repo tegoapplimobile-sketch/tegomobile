@@ -3,76 +3,65 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ma communauté</title>
-
+  <title>Page Facebook</title>
   <style>
-    :root { --bg:#ffffff; --fg:#111111; }
-    @media (prefers-color-scheme: dark) { :root { --bg:#111111; --fg:#eeeeee; } }
-    :root[data-theme="light"] { --bg:#ffffff; --fg:#111111; }
-    :root[data-theme="dark"]  { --bg:#111111; --fg:#eeeeee; }
-
     html, body {
-      margin:0;
-      padding:0;
-      width:100%;
-      height:100%;
-      background:transparent !important;
-      color:var(--fg);
-      font-family:Arial, sans-serif;
-      display:flex;
-      justify-content:center;
-      align-items:flex-start;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      overflow: auto;           /* autorise le scroll si contenu > écran */
     }
-
+    /* conteneur qui prend toute la hauteur de l'écran */
     .wrap {
-      width:100%;
-      min-height:100vh;
-      box-sizing:border-box;
-      background:transparent !important;
-      color:var(--fg);
-      display:flex;
-      justify-content:center;
-      align-items:flex-start;
-      padding:16px;
+      width: 100%;
+      min-height: 100vh;        /* pleine hauteur d’écran */
+      box-sizing: border-box;
+      display: block;
     }
-
-    iframe {
-      max-width:600px;
-      width:100%;
-      border:none;
-      overflow:hidden;
+    .fb-page {
+      width: 100% !important;   /* s’adapte en largeur */
+      max-width: 800px;         /* optionnel : limite sur grands écrans */
+      margin: 0 auto;           /* centre sur grands écrans */
     }
   </style>
 </head>
 <body>
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous"
+          src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0"></script>
+
   <div class="wrap">
-    <iframe
-      src="https://www.facebook.com/plugins/page.php
-?href=https://www.facebook.com/TegoAppliMobile
-&tabs=timeline
-&width=600
-&height=600
-&small_header=false
-&adapt_container_width=true
-&hide_cover=false
-&show_facepile=true"
-      width="600"
-      height="600"
-      scrolling="no"
-      frameborder="0"
-      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-      allowfullscreen="true">
-    </iframe>
+    <div class="fb-page"
+         data-href="https://www.facebook.com/OpenAI"
+         data-tabs="timeline"
+         data-width="100%"
+         data-height=""
+         data-adapt-container-width="true"
+         data-small-header="false"
+         data-hide-cover="false"
+         data-show-facepile="true">
+      <blockquote cite="https://www.facebook.com/OpenAI" class="fb-xfbml-parse-ignore">
+        <a href="https://www.facebook.com/OpenAI">Facebook</a>
+      </blockquote>
+    </div>
   </div>
 
+  <!-- Ajuste la largeur/hauteur au resize/orientation et reparse -->
   <script>
-    // Pour que MAUI puisse pousser le thème si tu veux garder ça
-    window.setTheme = function (theme) {
-      if (theme === 'light' || theme === 'dark')
-        document.documentElement.setAttribute('data-theme', theme);
-      else
-        document.documentElement.removeAttribute('data-theme');
-    };
+    function resizeFb() {
+      var el = document.querySelector('.fb-page');
+      if (!el) return;
+      el.setAttribute('data-width', Math.floor(document.documentElement.clientWidth));
+      el.setAttribute('data-height', Math.floor(window.innerHeight)); // valeur px exigée
+      if (window.FB && FB.XFBML && FB.XFBML.parse) {
+        FB.XFBML.parse();
+      }
+    }
+    window.addEventListener('load', resizeFb);
+    window.addEventListener('orientationchange', resizeFb);
+    window.addEventListener('resize', resizeFb);
   </script>
 </body>
 </html>
