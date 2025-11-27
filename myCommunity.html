@@ -12,23 +12,39 @@
     :root[data-theme="dark"]  { --bg:#111111; --fg:#eeeeee; }
 
     html, body {
-      margin:0; padding:0; width:100%; height:100%;
-      background:transparent !important; color:var(--fg);
+      margin:0;
+      padding:0;
+      width:100%;
+      height:100%;
+      background:transparent !important;
+      color:var(--fg);
       font-family:Arial, sans-serif;
-      display:flex; justify-content:center; align-items:center;
-      /* ⚠️ ne pas bloquer le scroll tant que ça ne marche pas */
-      overflow:auto;
     }
-    .wrap { width:100%; min-height:100vh; box-sizing:border-box; background:transparent !important; color:var(--fg); }
+
+    .wrap {
+      width:100%;
+      min-height:100vh;
+      box-sizing:border-box;
+      background:transparent !important;
+      color:var(--fg);
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding:16px;
+    }
+
     .fb-page {
       width:100% !important;
       max-width:600px;
-      /* 🛟 hauteur de secours pour éviter “page vide” avant le parse */
       min-height:600px;
       margin:0 auto;
     }
-    .fallback a { color:var(--fg); text-decoration:none; font-weight:500; }
-    body, .wrap { transition: background .3s ease, color .3s ease; }
+
+    .fallback a {
+      color:var(--fg);
+      text-decoration:none;
+      font-weight:500;
+    }
   </style>
 </head>
 <body>
@@ -36,22 +52,27 @@
 
   <div class="wrap">
     <div class="fb-page"
-         data-href="https://www.facebook.com/OpenAI"
+         data-href="https://www.facebook.com/TegoAppliMobile"
          data-tabs="timeline"
-         data-width="100%"
-         data-height="600"                <!-- hauteur par défaut -->
+         data-width="600"
+         data-height="600"
          data-adapt-container-width="true"
          data-small-header="false"
-         data-hide-cover="true"
+         data-hide-cover="false"
          data-show-facepile="true">
-      <blockquote cite="https://www.facebook.com/TegoAppliMobile" class="fb-xfbml-parse-ignore">
-        <p class="fallback"><a href="https://www.facebook.com/TegoAppliMobile">Voir la page Facebook</a></p>
+      <blockquote cite="https://www.facebook.com/TegoAppliMobile"
+                  class="fb-xfbml-parse-ignore">
+        <p class="fallback">
+          <a href="https://www.facebook.com/TegoAppliMobile" target="_blank" rel="noopener">
+            Voir la page Facebook
+          </a>
+        </p>
       </blockquote>
     </div>
   </div>
 
   <script>
-    // Thème poussé depuis MAUI
+    // Fonction thème pour MAUI (on la garde)
     window.setTheme = function (theme) {
       if (theme === 'light' || theme === 'dark')
         document.documentElement.setAttribute('data-theme', theme);
@@ -59,33 +80,18 @@
         document.documentElement.removeAttribute('data-theme');
     };
 
-    function setSizeAttrs() {
-      const el = document.querySelector('.fb-page');
-      if (!el) return;
-      el.setAttribute('data-width', Math.floor(document.documentElement.clientWidth));
-      el.setAttribute('data-height', Math.floor(window.innerHeight)); // px requis
-    }
-
-    function renderFb() {
-      setSizeAttrs();
-      if (window.FB && FB.XFBML && FB.XFBML.parse) FB.XFBML.parse();
-    }
-
-    // Appelé quand le SDK est prêt
     window.fbAsyncInit = function () {
-      FB.init({ xfbml: true, version: 'v19.0' });
-      renderFb();
+      FB.init({
+        appId: 'TON_APP_ID_FACEBOOK', // optionnel mais mieux si tu as déjà une app Facebook
+        xfbml: true,
+        version: 'v19.0'
+      });
     };
-
-    // Sécurité : on calibre la taille tôt, avant même le SDK
-    document.addEventListener('DOMContentLoaded', setSizeAttrs);
-    window.addEventListener('load', renderFb);
-    window.addEventListener('resize', renderFb);
-    window.addEventListener('orientationchange', renderFb);
   </script>
 
-  <!-- SDK Facebook (⚠️ sans xfbml=1 pour éviter auto-parse avant setSizeAttrs) -->
+  <!-- SDK Facebook officiel -->
   <script async defer crossorigin="anonymous"
-          src="https://connect.facebook.net/fr_FR/sdk.js#version=v19.0"></script>
+          src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0">
+  </script>
 </body>
 </html>
