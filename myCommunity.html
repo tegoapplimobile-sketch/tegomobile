@@ -11,66 +11,40 @@
       width: 100%;
       height: 100%;
       background: #fff;
-      overflow: auto;           /* autorise le scroll si contenu > écran */
+      overflow: auto;
     }
-    /* conteneur qui prend toute la hauteur de l'écran */
     .wrap {
       width: 100%;
-      min-height: 100vh;        /* pleine hauteur d’écran */
+      height: 100%;
       box-sizing: border-box;
-      display: block;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
     }
-    .fb-page {
-      width: 100% !important;   /* s’adapte en largeur */
-      max-width: 800px;         /* optionnel : limite sur grands écrans */
-      margin: 0 auto;           /* centre sur grands écrans */
+    .fb-container {
+      width: 100%;
+      max-width: 800px;
+      height: 100%;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      overflow: hidden;
     }
   </style>
 </head>
 <body>
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous"
-          src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0"></script>
-<iframe
-  src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FTegoAppliMobile&tabs=timeline&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
-  width="100%"
-  height="100%"
-  style="border:none;overflow:hidden"
-  scrolling="no"
-  frameborder="0"
-  allowfullscreen="true"
-  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-</iframe>
   <div class="wrap">
-    <div class="fb-page"
-         data-href="https://www.facebook.com/TegoAppliMobile"
-         data-tabs="timeline"
-         data-width="100%"
-         data-height="600"
-         data-adapt-container-width="true"
-         data-small-header="false"
-         data-hide-cover="false"
-         data-show-facepile="true">
-      <blockquote cite="https://www.facebook.com/TegoAppliMobile" class="fb-xfbml-parse-ignore">
-        <a href="https://www.facebook.com/TegoAppliMobile">Facebook</a>
-      </blockquote>
+    <div class="fb-container">
+      <iframe
+        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FTegoAppliMobile&tabs=timeline&width=800&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
+        scrolling="no"
+        frameborder="0"
+        allowfullscreen="true"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+      </iframe>
     </div>
   </div>
-
-  <!-- Ajuste la largeur/hauteur au resize/orientation et reparse -->
-  <script>
-    function resizeFb() {
-      var el = document.querySelector('.fb-page');
-      if (!el) return;
-      el.setAttribute('data-width', Math.floor(document.documentElement.clientWidth));
-      el.setAttribute('data-height', Math.floor(window.innerHeight)); // valeur px exigée
-      if (window.FB && FB.XFBML && FB.XFBML.parse) {
-        FB.XFBML.parse();
-      }
-    }
-    window.addEventListener('load', resizeFb);
-    window.addEventListener('orientationchange', resizeFb);
-    window.addEventListener('resize', resizeFb);
-  </script>
 </body>
 </html>
