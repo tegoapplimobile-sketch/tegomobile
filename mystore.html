@@ -41,7 +41,7 @@
 
     /* 🌈 Styles */
     html, body {
-      font-family: Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       margin: 0px;
       background: transparent !important;
       color: var(--fg);
@@ -90,17 +90,30 @@
   <ul>
     <li><img src="https://m.media-amazon.com/images/I/61OlGEW381L._SY466_.jpg" alt="Couverture du livre" /><a href="https://www.amazon.fr/dp/B0GJWGRSFC">31 Jours avec TEGO: Petits pas, Grands changements</a></li>
   </ul>
-  <p style="font-size:0.8rem;color:#666">Dernière mise à jour : mars 2026</p>
-</body>
+  <p style="font-size:0.8rem;color:#666">Dernière mise à jour : avril 2026</p>
 
   <script>
-    // Appelée depuis MAUI pour changer le thème
-  window.setTheme = function(theme) {
-    if (theme === 'light' || theme === 'dark') {
-      document.documentElement.setAttribute('data-theme', theme);
-    } else {
-      document.documentElement.removeAttribute('data-theme'); // redevient media query
-    }
-  };
+    // Appelée depuis MAUI pour changer le thème avec les couleurs dynamiques
+    window.setTheme = function(theme, colors) {
+      if (theme === 'light' || theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // Si les couleurs sont fournies, les appliquer
+        if (colors) {
+          if (colors.textColor) {
+            document.documentElement.style.setProperty('--fg', colors.textColor);
+            document.documentElement.style.setProperty('--li-fg', colors.textColor);
+            document.documentElement.style.setProperty('--a-fg', colors.textColor);
+          }
+          if (colors.backgroundColor) {
+            document.documentElement.style.setProperty('--bg', colors.backgroundColor);
+            document.documentElement.style.setProperty('--li-bg', colors.backgroundColor);
+          }
+        }
+      } else {
+        document.documentElement.removeAttribute('data-theme'); // redevient media query
+      }
+    };
   </script>
+</body>
 </html>
